@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+interface Question {
+  id: number;
+  prompt: string;
+  answer: 'O' | 'X';
+  explanation?: string;
+}
+
+type Subject = 'history' | 'education';
+
+type Quiz = {
+  [K in Subject]?: Question[];
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [quiz, setQuiz] = useState<Quiz>({});
+
+  const loadQuiz = async () => {
+    const response = await axios(
+      'https://gist.githubusercontent.com/sannimdev/f61b28824f5d8733e3bb8b4a10852e0f/raw/65e5a0502fd70bac1a2cabc08b8c33d051e48b45/%2508quiz.json'
+    );
+
+    if (!response?.data) {
+      throw new Error('불러오기 오류');
+    }
+
+    setQuiz(response.data);
+  };
+
+  useEffect(() => {
+    loadQuiz();
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {quiz?.history && (
+        <div>
+          {quiz.history.map((question) => (
+            <div>
+              <h3>{question.id}</h3>
+              <p>{question.prompt}</p>
+              <button>O</button>
+              <button>X</button>
+            </div>
+          ))}
+        </div>
+      )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
