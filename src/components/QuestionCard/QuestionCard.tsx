@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { IQuestion } from '../types';
-import { useCallback, useMemo, useState } from 'react';
+import { IQuestion } from '../../types';
+import { useMemo, useState } from 'react';
+import { TSelected, choiceButtons } from './types';
+import AfterCard from './AfterCard';
 
-interface Props {
+export interface QuestionCardProps {
   question: IQuestion;
 }
 
@@ -33,11 +35,7 @@ const Container = styled.div`
   }
 `;
 
-const buttons = ['O', 'X'] as const;
-type Button = (typeof buttons)[number]; // 'O' | 'X'
-type TSelected = Button | undefined;
-
-function QuestionCard({ question }: Props) {
+function QuiestionCard({ question }: QuestionCardProps) {
   const [selected, setSelected] = useState<TSelected>(undefined);
 
   const taken = useMemo(() => selected !== undefined, [selected]);
@@ -51,25 +49,22 @@ function QuestionCard({ question }: Props) {
     setSelected(choice);
   };
 
-  return taken ? (
+  return (
     <Container>
-      <h3>{question.id}</h3>
-      <p>{question.prompt}</p>
-      <h5>{question.answer}</h5>
-      <h4>{result}</h4>
-      <button onClick={() => setSelected(undefined)}>다시 풀기</button>
-    </Container>
-  ) : (
-    <Container>
-      <h3>{question.id}</h3>
-      <p>{question.prompt}</p>
-      {buttons.map((key) => (
-        <button key={key} onClick={() => handleButtonClick(key)}>
-          {key}
-        </button>
-      ))}
+      {taken ? (
+        <AfterCard question={question} result={result} onClick={() => setSelected(undefined)} />
+      ) : (
+        <>
+          <h3>{question.id}</h3>
+          <p>{question.prompt}</p>
+          {choiceButtons.map((key) => (
+            <button key={key} onClick={() => handleButtonClick(key)}>
+              {key}
+            </button>
+          ))}
+        </>
+      )}
     </Container>
   );
 }
-
-export default QuestionCard;
+export default QuiestionCard;

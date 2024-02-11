@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { IQuiz } from '../types';
-import QuestionCard from './QuestionCard';
+import { QuestionCard } from './QuestionCard';
 
 interface Props {
   quiz: IQuiz;
