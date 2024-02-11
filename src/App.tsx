@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useAtom } from 'jotai';
 import styled from 'styled-components';
-import Quiz from './components/Quiz';
-import { IQuiz } from './types';
+import axios from 'axios';
 import { QUIZZES_URL } from './constants';
+import { quizzesAtom } from './atoms';
 
 const AppContainer = styled.div`
   width: 500px;
@@ -13,12 +13,12 @@ const AppContainer = styled.div`
   }
 `;
 
-function App() {
-  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
+function App({ children }: React.PropsWithChildren) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setQuizzes] = useAtom(quizzesAtom);
 
   const loadQuiz = async () => {
     const response = await axios(QUIZZES_URL);
-    console.log(QUIZZES_URL, 'URL');
 
     if (!response?.data) {
       throw new Error('불러오기 오류');
@@ -29,19 +29,10 @@ function App() {
 
   useEffect(() => {
     loadQuiz();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <AppContainer>
-      <ul>
-        {quizzes.map((quiz) => (
-          <li key={quiz.key}>
-            <Quiz quiz={quiz} />
-          </li>
-        ))}
-      </ul>
-    </AppContainer>
-  );
+  return <AppContainer>{children}</AppContainer>;
 }
 
 export default App;
