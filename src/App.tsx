@@ -7,9 +7,11 @@ import { quizzesAtom } from './atoms';
 
 const AppContainer = styled.div`
   width: 500px;
+  transition: padding cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
 
   @media (max-width: 500px) {
     width: 100%;
+    padding: 0 16px;
   }
 `;
 
