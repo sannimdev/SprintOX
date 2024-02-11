@@ -1,12 +1,12 @@
-export interface Question {
+export interface IQuestion {
   id: number;
   prompt: string;
   answer: 'O' | 'X';
   explanation?: string;
 }
 
-export interface Quiz {
+export interface IQuiz {
   key: string;
   label: string;
-  questions: Question[];
+  questions: IQuestion[];
 }
