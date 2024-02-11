@@ -4,6 +4,7 @@ interface Props extends QuestionCardProps {
   result: string;
   onClick: () => void;
 }
+
 function AfterCard({ question, result, onClick }: Props) {
   return (
     <>

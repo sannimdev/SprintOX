@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { IQuestion } from '../../types';
 import { useMemo, useState } from 'react';
-import { TSelected, choiceButtons } from './types';
+import { TSelected } from './types';
 import AfterCard from './AfterCard';
+import BeforeCard from './BeforeCard';
 
 export interface QuestionCardProps {
   question: IQuestion;
@@ -54,15 +55,7 @@ function QuiestionCard({ question }: QuestionCardProps) {
       {taken ? (
         <AfterCard question={question} result={result} onClick={() => setSelected(undefined)} />
       ) : (
-        <>
-          <h3>{question.id}</h3>
-          <p>{question.prompt}</p>
-          {choiceButtons.map((key) => (
-            <button key={key} onClick={() => handleButtonClick(key)}>
-              {key}
-            </button>
-          ))}
-        </>
+        <BeforeCard question={question} onClick={handleButtonClick} />
       )}
     </Container>
   );
