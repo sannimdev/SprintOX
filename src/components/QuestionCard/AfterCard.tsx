@@ -11,8 +11,8 @@ function AfterCard({ question, result, onClick }: Props) {
       <h3>{question.id}</h3>
       <p>{question.prompt}</p>
       <h5>{question.answer}</h5>
-      {question.explanation && <p>{question.explanation}</p>}
       <h4>{result}</h4>
+      {question.explanation && <p>{question.explanation}</p>}
       <button onClick={() => onClick()}>다시 풀기</button>
     </>
   );
