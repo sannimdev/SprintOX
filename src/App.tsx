@@ -1,18 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
-interface Question {
-  id: number;
-  prompt: string;
-  answer: 'O' | 'X';
-  explanation?: string;
-}
-
-interface Quiz {
-  key: string;
-  label: string;
-  questions: Question[];
-}
+import { Quiz } from './types';
 
 function App() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
