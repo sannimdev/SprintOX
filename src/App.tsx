@@ -8,25 +8,25 @@ interface Question {
   explanation?: string;
 }
 
-type Subject = 'history' | 'education';
-
-type Quiz = {
-  [K in Subject]?: Question[];
-};
+interface Quiz {
+  key: string;
+  label: string;
+  questions: Question[];
+}
 
 function App() {
-  const [quiz, setQuiz] = useState<Quiz>({});
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
   const loadQuiz = async () => {
     const response = await axios(
-      'https://gist.githubusercontent.com/sannimdev/f61b28824f5d8733e3bb8b4a10852e0f/raw/65e5a0502fd70bac1a2cabc08b8c33d051e48b45/%2508quiz.json'
+      'https://gist.githubusercontent.com/sannimdev/f61b28824f5d8733e3bb8b4a10852e0f/raw/2fe826de0d01f1a03646d49d65438e0535362c5d/%2508%2508quizzes.json'
     );
 
     if (!response?.data) {
       throw new Error('불러오기 오류');
     }
 
-    setQuiz(response.data);
+    setQuizzes(response.data);
   };
 
   useEffect(() => {
@@ -35,18 +35,25 @@ function App() {
 
   return (
     <>
-      {quiz?.history && (
-        <div>
-          {quiz.history.map((question) => (
-            <div>
-              <h3>{question.id}</h3>
-              <p>{question.prompt}</p>
-              <button>O</button>
-              <button>X</button>
-            </div>
-          ))}
-        </div>
-      )}
+      <ul>
+        {quizzes.map((quiz) => (
+          <li>
+            <h2>{quiz.label}</h2>
+            <ol>
+              {quiz.questions.map((question) => (
+                <li>
+                  <div>
+                    <h3>{question.id}</h3>
+                    <p>{question.prompt}</p>
+                    <button>O</button>
+                    <button>X</button>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
