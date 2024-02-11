@@ -34,6 +34,12 @@ const Container = styled.div`
     font-size: 1.1rem;
     text-align: center;
   }
+
+  button {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
 `;
 
 function QuiestionCard({ question }: QuestionCardProps) {
