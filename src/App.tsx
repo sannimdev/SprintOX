@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { IQuiz } from './types';
+import styled from 'styled-components';
 import Quiz from './components/Quiz';
+import { IQuiz } from './types';
 import { QUIZZES_URL } from './constants';
+
+const AppContainer = styled.div`
+  width: 500px;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
 
 function App() {
   const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
@@ -23,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <AppContainer>
       <ul>
         {quizzes.map((quiz) => (
           <li key={quiz.key}>
@@ -31,7 +40,7 @@ function App() {
           </li>
         ))}
       </ul>
-    </>
+    </AppContainer>
   );
 }
 
