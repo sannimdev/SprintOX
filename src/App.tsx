@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Quiz } from './types';
+import { IQuiz } from './types';
+import Quiz from './components/Quiz';
 
 function App() {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
 
   const loadQuiz = async () => {
     const response = await axios(
@@ -26,19 +27,7 @@ function App() {
       <ul>
         {quizzes.map((quiz) => (
           <li>
-            <h2>{quiz.label}</h2>
-            <ol>
-              {quiz.questions.map((question) => (
-                <li>
-                  <div>
-                    <h3>{question.id}</h3>
-                    <p>{question.prompt}</p>
-                    <button>O</button>
-                    <button>X</button>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <Quiz quiz={quiz} />
           </li>
         ))}
       </ul>
