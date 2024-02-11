@@ -11,7 +11,7 @@ function Quiz({ quiz }: Props) {
       <h2>{quiz.label}</h2>
       <ol>
         {quiz.questions.map((question) => (
-          <li>
+          <li key={question.id}>
             <QuestionCard question={question} />
           </li>
         ))}
