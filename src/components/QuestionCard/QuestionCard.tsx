@@ -32,7 +32,6 @@ const Container = styled.div`
   > p {
     padding: 16px 0;
     font-size: 1.1rem;
-    text-align: center;
   }
 
   button {
